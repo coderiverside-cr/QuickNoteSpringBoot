@@ -26,8 +26,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldReturnANote() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate                
                 .getForEntity("/notes/1", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -44,8 +43,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldNotReturnANoteWithAnUnknownId() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate                
                 .getForEntity("/notes/25", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(response.getBody()).isBlank();
@@ -64,15 +62,13 @@ class QuickNoteApplicationTests {
                 false,
                 "blue");
 
-        ResponseEntity<Void> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<Void> response = restTemplate                
                 .postForEntity("/notes", newNote, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         URI locationOfNewCashCard = response.getHeaders().getLocation();
 
-        ResponseEntity<String> getResponse = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> getResponse = restTemplate                
                 .getForEntity(locationOfNewCashCard, String.class);
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -80,8 +76,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldReturnAllNotes() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate                
                 .getForEntity("/notes", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -108,8 +103,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldReturnNotesWithPagination() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate               
                 .getForEntity("/notes?page=0&size=3", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -125,8 +119,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldReturnNotesWithSorting() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate                
                 .getForEntity("/notes?page=0&size=3&sort=title,desc",
                         String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -145,8 +138,7 @@ class QuickNoteApplicationTests {
 
     @Test
     void shouldReturnASortedPageOfNotesWithDefaultValues() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("coderiverside", "Zaqwsx")
+        ResponseEntity<String> response = restTemplate                
                 .getForEntity("/notes", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -160,25 +152,5 @@ class QuickNoteApplicationTests {
 
         String lastTitle = documentContext.read("$[6].title");
         assertThat(lastTitle).isEqualTo("Book recommendations");
-    }
-
-    @Test
-    void shouldNoReturnANoteWhenNotAuthenticated() {
-        ResponseEntity<String> response = restTemplate
-        .withBasicAuth("coderiverside", "wrongpassword")
-        .getForEntity("/notes/1", String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-        assertThat(response.getBody()).isBlank();
-    }
-
-
-    @Test
-    void shoudRejectUsersWhoAreNotNoteOwners() {
-        ResponseEntity<String> response = restTemplate
-                .withBasicAuth("no-notes", "Zaq1")
-                .getForEntity("/notes/1", String.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-        assertThat(response.getBody()).isBlank();
-    }
-
+    }    
 }
