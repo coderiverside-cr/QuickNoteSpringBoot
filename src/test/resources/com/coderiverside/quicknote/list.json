@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "title": "Grocery List",
+    "content": "Milk, bread, eggs, cheese",
+    "type": "text",
+    "creationDate": "2025-08-12T14:30:00Z",
+    "isPinned": true,
+    "isArchived": false,
+    "color": "yellow"
+  },
+  {
+    "id": 2,
+    "title": "Buy groceries",
+    "content": "Milk, bread, eggs",
+    "type": "text",
+    "creationDate": "2025-08-16T10:00:00Z",
+    "isPinned": false,
+    "isArchived": false,
+    "color": "white"
+  },
+  {
+    "id": 3,
+    "title": "Gym workout",
+    "content": "30 minutes cardio, 20 minutes weights",
+    "type": "text",
+    "creationDate": "2025-08-15T08:00:00Z",
+    "isPinned": true,
+    "isArchived": false,
+    "color": "yellow"
+  },
+  {
+    "id": 4,
+    "title": "Meeting notes",
+    "content": "Discuss project milestones and deadlines",
+    "type": "text",
+    "creationDate": "2025-08-14T09:00:00Z",
+    "isPinned": false,
+    "isArchived": false,
+    "color": "white"
+  },
+  {
+    "id": 5,
+    "title": "Shopping list",
+    "content": "To buy: apples, bananas, oranges",
+    "type": "text",
+    "creationDate": "2025-08-13T11:00:00Z",
+    "isPinned": false,
+    "isArchived": false,
+    "color": "white"
+  },
+  {
+    "id": 6,
+    "title": "Project ideas",
+    "content": "Brainstorming session notes",
+    "type": "text",
+    "creationDate": "2025-08-17T12:00:00Z",
+    "isPinned": false,
+    "isArchived": false,
+    "color": "white"
+  },
+  {
+    "id": 7,
+    "title": "Book recommendations",
+    "content": "1. The Great Gatsby. To Kill a Mockingbird. 1984",
+    "type": "text",
+    "creationDate": "2025-08-18T09:00:00Z",
+    "isPinned": false,
+    "isArchived": false,
+    "color": "white"
+  }
+]
