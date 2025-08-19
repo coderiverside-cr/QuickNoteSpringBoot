@@ -31,12 +31,14 @@ public class NoteService {
 
     public List<Note> getAllNotes(Pageable pageable) {
         Page<Note> page = noteRepository.findAll(
-            PageRequest.of(
-                pageable.getPageNumber(), 
-                pageable.getPageSize(),
-                Sort.by(Sort.Direction.DESC, "Title")
-            )
-        );
+                PageRequest.of(
+                        pageable.getPageNumber(),
+                        pageable.getPageSize(),
+                        Sort.by(Sort.Direction.DESC, "Title")));
         return page.getContent();
+    }
+
+    public void delete(long noteId) {       
+        noteRepository.deleteById(noteId);
     }
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.hibernate.query.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -44,7 +47,7 @@ public class NoteController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> createNote(@RequestBody NoteDto noteDto, UriComponentsBuilder ucb) {
+    private ResponseEntity<Void> createNote(@RequestBody NoteDto noteDto, UriComponentsBuilder ucb) {
 
         Note note = noteDto.toEntity();
         note = noteService.save(note);
@@ -56,7 +59,7 @@ public class NoteController {
     }
     
     @GetMapping("")
-    public ResponseEntity<List<NoteDto>> getNotes(Pageable pageable){
+    private ResponseEntity<List<NoteDto>> getNotes(Pageable pageable){
         List<Note> notes = noteService.getAllNotes(pageable);
         List<NoteDto> noteDtos = notes.stream()
                 .map(NoteDto::fromEntity)
@@ -64,6 +67,31 @@ public class NoteController {
         return ResponseEntity.ok(noteDtos);        
     }
     
+    @PutMapping("/{noteId}")
+    private ResponseEntity<Void> updateNote(@PathVariable Long noteId, @RequestBody NoteDto noteDto) {
+        Optional<Note> existingNoteOptional = noteService.getNoteById(noteId);
+        if (existingNoteOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Note existingNote = existingNoteOptional.get();
+        Note updatedNote = noteDto.toEntity();
+        updatedNote.setId(existingNote.getId());
+        
+        noteService.save(updatedNote);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{noteId}")
+    private ResponseEntity<Void> deleteNote(@PathVariable Long noteId) {
+        Optional<Note> existingNoteOptional = noteService.getNoteById(noteId);
+        if (existingNoteOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        noteService.delete(noteId);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
