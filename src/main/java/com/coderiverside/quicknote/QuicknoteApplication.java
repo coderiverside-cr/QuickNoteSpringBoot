@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QuickNoteApplication {
+public class QuicknoteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(QuickNoteApplication.class, args);
+		SpringApplication.run(QuicknoteApplication.class, args);
 	}
 
 }
