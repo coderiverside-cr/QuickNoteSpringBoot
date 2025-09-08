@@ -27,6 +27,7 @@ public class Note {
     @Column(name = "is_archived")
     private boolean isArchived;
     private String color;
+    private String owner;
     
     public long getId() {
         return id;
@@ -76,7 +77,12 @@ public class Note {
     public void setColor(String color) {
         this.color = color;
     }
-
+    public String getOwner() {
+        return owner;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     
 
 }

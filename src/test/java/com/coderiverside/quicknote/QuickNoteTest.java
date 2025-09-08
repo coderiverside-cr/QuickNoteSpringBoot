@@ -35,7 +35,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 12, 14, 30),
                         true,
                         false,
-                        "yellow"),
+                        "yellow",
+                        "sophia"),
                 new NoteDto(
                         2L,
                         "Buy groceries",
@@ -44,7 +45,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 16, 10, 0),
                         false,
                         false,
-                        "white"),
+                        "white",
+                        "sophia"),
                 new NoteDto(
                         3L,
                         "Gym workout",
@@ -53,7 +55,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 15, 8, 0),
                         true,
                         false,
-                        "yellow"),
+                        "yellow",
+                        "sophia"),
                 new NoteDto(
                         4L,
                         "Meeting notes",
@@ -62,7 +65,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 14, 9, 0),
                         false,
                         false,
-                        "white"),
+                        "white",
+                        "gabriel"),
                 new NoteDto(
                         5L,
                         "Shopping list",
@@ -71,7 +75,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 13, 11, 0),
                         false,
                         false,
-                        "white"),
+                        "white",
+                        "gabriel"),
                 new NoteDto(
                         6L,
                         "Project ideas",
@@ -80,7 +85,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 17, 12, 0),
                         false,
                         false,
-                        "white"),
+                        "white",
+                        "fabricio"),
                 new NoteDto(
                         7L,
                         "Book recommendations",
@@ -89,7 +95,8 @@ public class QuickNoteTest {
                         LocalDateTime.of(2025, 8, 18, 9, 0),
                         false,
                         false,
-                        "white"));
+                        "white",
+                        "fabricio"));
     }
 
     @Test
@@ -107,7 +114,8 @@ public class QuickNoteTest {
                 LocalDateTime.of(2025, 8, 12, 14, 30),
                 true,
                 false,
-                "yellow");
+                "yellow",
+                "sophia");
 
         JsonContent<NoteDto> jsonContent = json.write(note);
         assertThat(jsonContent).isStrictlyEqualToJson("expected.json");
@@ -133,7 +141,8 @@ public class QuickNoteTest {
                   "creationDate": "2025-08-12T14:30:00Z",
                   "isPinned": true,
                   "isArchived": false,
-                  "color": "yellow"
+                  "color": "yellow",
+                  "owner": "sophia"
                 }
                 """;
         NoteDto note = new NoteDto(
@@ -144,7 +153,8 @@ public class QuickNoteTest {
                 LocalDateTime.of(2025, 8, 12, 14, 30),
                 true,
                 false,
-                "yellow");
+                "yellow",
+                "sophia");
         assertThat(json.parse(expected)).isEqualTo(note);
         assertThat(json.parseObject(expected).title()).isEqualTo("Grocery List");
         assertThat(json.parseObject(expected).content()).isEqualTo("Milk, bread, eggs, cheese");
@@ -168,7 +178,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-12T14:30:00Z",
                     "isPinned": true,
                     "isArchived": false,
-                    "color": "yellow"
+                    "color": "yellow",
+                    "owner": "sophia"
                   },
                   {
                     "id": 2,
@@ -178,7 +189,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-16T10:00:00Z",
                     "isPinned": false,
                     "isArchived": false,
-                    "color": "white"
+                    "color": "white",
+                    "owner": "sophia"
                   },
                   {
                     "id": 3,
@@ -188,7 +200,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-15T08:00:00Z",
                     "isPinned": true,
                     "isArchived": false,
-                    "color": "yellow"
+                    "color": "yellow",
+                    "owner": "sophia"
                   },
                   {
                     "id": 4,
@@ -198,7 +211,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-14T09:00:00Z",
                     "isPinned": false,
                     "isArchived": false,
-                    "color": "white"
+                    "color": "white",
+                    "owner": "gabriel"
                   },
                   {
                     "id": 5,
@@ -208,7 +222,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-13T11:00:00Z",
                     "isPinned": false,
                     "isArchived": false,
-                    "color": "white"
+                    "color": "white",
+                    "owner": "gabriel"
                   },
                   {
                     "id": 6,
@@ -218,7 +233,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-17T12:00:00Z",
                     "isPinned": false,
                     "isArchived": false,
-                    "color": "white"
+                    "color": "white",
+                    "owner": "fabricio"
                   },
                   {
                     "id": 7,
@@ -228,7 +244,8 @@ public class QuickNoteTest {
                     "creationDate": "2025-08-18T09:00:00Z",
                     "isPinned": false,
                     "isArchived": false,
-                    "color": "white"
+                    "color": "white",
+                    "owner": "fabricio"
                   }
                 ]
                 """;

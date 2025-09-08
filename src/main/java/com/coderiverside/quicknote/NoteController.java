@@ -1,11 +1,13 @@
 package com.coderiverside.quicknote;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +29,10 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<NoteDto> getNoteById(@PathVariable Long id) {
-        Optional<Note> noteOptional = noteService.getNoteById(id);
+    private ResponseEntity<NoteDto> getNoteById(
+            @PathVariable Long id,
+            Principal principal) {
+        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -38,8 +42,12 @@ public class NoteController {
     }
 
     @PostMapping("")
-    private ResponseEntity<Void> createNote(@RequestBody NoteDto noteDto, UriComponentsBuilder ucb) {
-        Note note = noteDto.toEntity();
+    private ResponseEntity<Void> createNote(
+            @RequestBody NoteDto noteDto,
+            UriComponentsBuilder ucb,
+            Principal principal) {
+
+        Note note = noteDto.toEntity(principal.getName());
         note = noteService.save(note);
         URI location = ucb.path("/notes/{id}")
                 .buildAndExpand(note.getId())
@@ -48,8 +56,10 @@ public class NoteController {
     }
 
     @GetMapping("")
-    private ResponseEntity<List<NoteDto>> getAllNotes(Pageable pageable) {
-        List<Note> notes = noteService.getAllNotes(pageable);
+    private ResponseEntity<List<NoteDto>> getAllNotes(
+        Principal principal,
+        Pageable pageable) {
+        List<Note> notes = noteService.getAllNotes(pageable, principal.getName());
         List<NoteDto> noteDtos = notes.stream()
                 .map(NoteDto::fromEntity)
                 .toList();
@@ -59,13 +69,14 @@ public class NoteController {
     @PutMapping("/{id}")
     private ResponseEntity<Void> updateNote(
             @PathVariable Long id,
-            @RequestBody NoteDto noteDto) {
-        Optional<Note> noteOptional = noteService.getNoteById(id);
+            @RequestBody NoteDto noteDto,
+            Principal principal) {
+        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Note note = noteOptional.get();
-        Note updatedNote = noteDto.toEntity();
+        Note updatedNote = noteDto.toEntity(principal.getName());
         updatedNote.setId(note.getId());
         noteService.save(updatedNote);
         return ResponseEntity.noContent().build();
@@ -73,8 +84,9 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deleteNote(@PathVariable Long id) {
-        Optional<Note> noteOptional = noteService.getNoteById(id);
+    private ResponseEntity<Void> deleteNote(@PathVariable Long id,
+            Principal principal) {
+        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

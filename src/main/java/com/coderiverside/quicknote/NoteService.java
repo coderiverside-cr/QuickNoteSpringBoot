@@ -17,19 +17,19 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Optional<Note> getNoteById(Long id) {
+    public Optional<Note> getNoteById(Long id, String owner) {
         if (id == null) {
             return Optional.empty();
         }
-        return noteRepository.findById(id);
+        return noteRepository.findByIdAndOwner(id, owner);
     }
 
     public Note save(Note note) {
         return noteRepository.save(note);
     }
 
-    public List<Note> getAllNotes(Pageable pageable) {
-        return noteRepository.findAll(
+    public List<Note> getAllNotes(Pageable pageable, String owner) {
+        return noteRepository.findAllByOwner(owner,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),

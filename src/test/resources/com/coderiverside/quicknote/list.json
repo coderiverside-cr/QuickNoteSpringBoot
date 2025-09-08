@@ -7,7 +7,8 @@
     "creationDate": "2025-08-12T14:30:00Z",
     "isPinned": true,
     "isArchived": false,
-    "color": "yellow"
+    "color": "yellow",
+    "owner": "sophia"
   },
   {
     "id": 2,
@@ -17,7 +18,8 @@
     "creationDate": "2025-08-16T10:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white"
+    "color": "white",
+    "owner": "sophia"
   },
   {
     "id": 3,
@@ -27,7 +29,8 @@
     "creationDate": "2025-08-15T08:00:00Z",
     "isPinned": true,
     "isArchived": false,
-    "color": "yellow"
+    "color": "yellow",
+    "owner": "sophia"
   },
   {
     "id": 4,
@@ -37,7 +40,8 @@
     "creationDate": "2025-08-14T09:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white"
+    "color": "white",
+    "owner": "gabriel"
   },
   {
     "id": 5,
@@ -47,7 +51,8 @@
     "creationDate": "2025-08-13T11:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white"
+    "color": "white",
+    "owner": "gabriel"
   },
   {
     "id": 6,
@@ -57,7 +62,8 @@
     "creationDate": "2025-08-17T12:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white"
+    "color": "white",
+    "owner": "fabricio"
   },
   {
     "id": 7,
@@ -67,6 +73,7 @@
     "creationDate": "2025-08-18T09:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white"
+    "color": "white",
+    "owner": "fabricio"
   }
 ]

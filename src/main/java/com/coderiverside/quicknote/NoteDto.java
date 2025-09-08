@@ -12,7 +12,8 @@ public record NoteDto(
         @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'") LocalDateTime creationDate,
         boolean isPinned,
         boolean isArchived,
-        String color) {
+        String color,
+        String owner) {
 
     public static NoteDto fromEntity(Note note) {
         return new NoteDto(
@@ -23,10 +24,11 @@ public record NoteDto(
                 note.getCreationDate(),
                 note.isPinned(),
                 note.isArchived(),
-                note.getColor());
+                note.getColor(),
+                note.getOwner());
     }
 
-    public Note toEntity() {
+    public Note toEntity(String owner) {
         Note note = new Note();
         note.setId(this.id);
         note.setTitle(this.title);
@@ -36,6 +38,7 @@ public record NoteDto(
         note.setPinned(this.isPinned);
         note.setArchived(this.isArchived);
         note.setColor(this.color);
+        note.setOwner(owner);
         return note;
     }
 }
