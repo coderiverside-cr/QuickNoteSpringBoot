@@ -51,6 +51,15 @@ class QuicknoteApplicationTests {
 	}
 
 	@Test
+	void shouldRejectUsersWhoAreNotNoteOwners() {
+		ResponseEntity<NoteDto> response = restTemplate
+				.withBasicAuth("no-notes", "Zaq1")
+				.getForEntity("/notes/1", NoteDto.class);
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+	}
+
+
+	@Test
 	void shouldNotReturnANoteWithAnUnknownId() {
 		ResponseEntity<String> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
