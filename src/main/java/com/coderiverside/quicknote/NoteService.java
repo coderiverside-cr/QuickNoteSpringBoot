@@ -1,11 +1,10 @@
 package com.coderiverside.quicknote;
 
+import com.coderiverside.quicknote.exception.BadRequestException;
+import com.coderiverside.quicknote.exception.NoteNotFoundException;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,30 +16,57 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Optional<Note> getNoteById(Long id, String owner) {
+    public Note getNoteById(Long id, String owner) {
         if (id == null) {
-            return Optional.empty();
+            throw new BadRequestException("Note id cannot be null");
         }
-        return noteRepository.findByIdAndOwner(id, owner);
+        return noteRepository.findByIdAndOwner(id, owner)
+                .orElseThrow(() -> new NoteNotFoundException(id));
     }
 
     public Note save(Note note) {
+        if (note == null) {
+            throw new BadRequestException("Note cannot be null");
+        }
+        if (note.getTitle() == null || note.getTitle().trim().isEmpty()) {
+            throw new BadRequestException("Note title cannot be empty");
+        }
+        if (note.getContent() == null || note.getContent().trim().isEmpty()) {
+            throw new BadRequestException("Note content cannot be empty");
+        }
         return noteRepository.save(note);
     }
 
+    public Note update(Long id, Note note, String owner) {
+        if (note == null) {
+            throw new BadRequestException("Note cannot be null");
+        }
+        if (id == null) {
+            throw new BadRequestException("Note id cannot be null");
+        }
+
+        Note existingNote = getNoteById(id, owner);
+        existingNote.setTitle(note.getTitle());
+        existingNote.setContent(note.getContent());
+
+        return save(existingNote);
+    }
+
     public List<Note> getAllNotes(Pageable pageable, String owner) {
+        if (pageable == null) {
+            throw new BadRequestException("Pageable cannot be null");
+        }
         return noteRepository.findAllByOwner(owner,
                 PageRequest.of(
                         pageable.getPageNumber(),
                         pageable.getPageSize(),
-                        //Sort.by(Sort.Direction.DESC, "title")  
-                        pageable.getSort()
-                        ))
+                        pageable.getSort()))
                 .getContent();
     }
 
-    public void delete(long noteId) {       
-        noteRepository.deleteById(noteId);
+    public void delete(long noteId, String owner) {
+        Note note = getNoteById(noteId, owner);
+        noteRepository.delete(note);
     }
 
 }
