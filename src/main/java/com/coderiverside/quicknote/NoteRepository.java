@@ -1,6 +1,5 @@
 package com.coderiverside.quicknote;
 
-
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;

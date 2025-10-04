@@ -28,61 +28,76 @@ public class Note {
     private boolean isArchived;
     private String color;
     private String owner;
-    
+
     public long getId() {
         return id;
     }
+
     public void setId(long id) {
         this.id = id;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getContent() {
         return content;
     }
+
     public void setContent(String content) {
         this.content = content;
     }
+
     public String getType() {
         return type;
     }
+
     public void setType(String type) {
         this.type = type;
     }
+
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
+
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
+
     public boolean isPinned() {
         return isPinned;
     }
+
     public void setPinned(boolean isPinned) {
         this.isPinned = isPinned;
     }
+
     public boolean isArchived() {
         return isArchived;
     }
+
     public void setArchived(boolean isArchived) {
         this.isArchived = isArchived;
     }
+
     public String getColor() {
         return color;
     }
+
     public void setColor(String color) {
         this.color = color;
     }
+
     public String getOwner() {
         return owner;
     }
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
-    
-
 }

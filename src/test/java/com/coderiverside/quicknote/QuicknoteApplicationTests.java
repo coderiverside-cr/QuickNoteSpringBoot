@@ -35,8 +35,9 @@ class QuicknoteApplicationTests {
 		NoteDto note = response.getBody();
 		assertThat(note.id()).isEqualTo(1L);
 		assertThat(note.title()).isEqualTo("Grocery List");
-	}
 
+	}
+	
 	@Test
 	void shouldNotReturnANoteWhenUsingBadCredentials() {
 		ResponseEntity<NoteDto> response = restTemplate
@@ -56,16 +57,15 @@ class QuicknoteApplicationTests {
 				.withBasicAuth("no-notes", "Zaq1")
 				.getForEntity("/notes/1", NoteDto.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-	}
-
+	}	
 
 	@Test
 	void shouldNotReturnANoteWithAnUnknownId() {
-		ResponseEntity<String> response = restTemplate
+		ResponseEntity<NoteDto> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.getForEntity("/notes/25", String.class);
+				.getForEntity("/notes/25", NoteDto.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-		assertThat(response.getBody()).isBlank();
+		assertThat(response.getBody()).isNull();
 
 	}
 
@@ -88,9 +88,9 @@ class QuicknoteApplicationTests {
 		assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
 		URI locationOfNote = createResponse.getHeaders().getLocation();
-		ResponseEntity<String> getResponse = restTemplate
+		ResponseEntity<NoteDto> getResponse = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.getForEntity(locationOfNote, String.class);
+				.getForEntity(locationOfNote, NoteDto.class);
 		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 	}
@@ -118,9 +118,9 @@ class QuicknoteApplicationTests {
 
 		List<String> titles = notes.stream().map(NoteDto::title).toList();
 		assertThat(titles).containsExactlyInAnyOrder(
-				"Grocery List",
-				"Buy groceries",
-				"Gym workout");
+                "Grocery List",
+                "Buy groceries",
+                "Gym workout");
 
 	}
 
@@ -135,6 +135,7 @@ class QuicknoteApplicationTests {
 						null,
 						new ParameterizedTypeReference<List<NoteDto>>() {
 						});
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		List<NoteDto> notes = response.getBody();
@@ -153,6 +154,7 @@ class QuicknoteApplicationTests {
 						null,
 						new ParameterizedTypeReference<List<NoteDto>>() {
 						});
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 
@@ -168,53 +170,54 @@ class QuicknoteApplicationTests {
 	}
 
 	@Test
-	@DirtiesContext
-	void shouldUpdateANote() {
-		NoteDto updatedNote = new NoteDto(
-				1L,
-				"Updated Grocery List",
-				"Updated list of groceries to buy",
-				"text",
-				null,
-				false,
-				false,
-				"green",
+    @DirtiesContext
+    void shouldUpdateANote() {
+        NoteDto updatedNote = new NoteDto(
+                1L,
+                "Updated Grocery List",
+                "Updated list of groceries to buy",
+                "text",
+                null,
+                false,
+                false,
+                "green",
 				"sophia");
 
-		HttpEntity<NoteDto> requestEntity = new HttpEntity<>(updatedNote);
-		ResponseEntity<Void> response = restTemplate
+        HttpEntity<NoteDto> requestEntity = new HttpEntity<>(updatedNote);
+        ResponseEntity<Void> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.exchange("/notes/1", HttpMethod.PUT, requestEntity, Void.class);
+                .exchange("/notes/1", HttpMethod.PUT, requestEntity, Void.class);
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
-		ResponseEntity<NoteDto> getResponse = restTemplate
+        ResponseEntity<NoteDto> getResponse = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.getForEntity("/notes/1", NoteDto.class);
+                .getForEntity("/notes/1", NoteDto.class);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
-		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 		assertThat(getResponse.getBody()).isNotNull();
 		assertThat(getResponse.getBody().title()).isEqualTo("Updated Grocery List");
 		assertThat(getResponse.getBody().content()).isEqualTo("Updated list of groceries to buy");
 
-	}
+    }
 
 	@Test
-	void shouldReturnNotFoundWhenUpdatingNonExistentNote() {
-		NoteDto unknowCard = new NoteDto(
-				999L,
-				"Non-existent Note",
-				"This note does not exist",
-				"text",
-				null,
-				false,
-				false,
-				"red",
+    void shouldReturnNotFoundWhenUpdatingNonExistentNote() {
+        NoteDto unknowCard = new NoteDto(
+                999L,
+                "Non-existent Note",
+                "This note does not exist",
+                "text",
+                null,
+                false,
+                false,
+                "red",
 				"alejandro");
-		HttpEntity<NoteDto> requestEntity = new HttpEntity<>(unknowCard);
-		ResponseEntity<Void> response = restTemplate
+        HttpEntity<NoteDto> requestEntity = new HttpEntity<>(unknowCard);
+        ResponseEntity<Void> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.exchange("/notes/999", HttpMethod.PUT, requestEntity, Void.class);
+                .exchange("/notes/999", HttpMethod.PUT, requestEntity, Void.class);
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isNull();
@@ -243,28 +246,27 @@ class QuicknoteApplicationTests {
 	}
 
 	@Test
-	@DirtiesContext
-	void shouldDeleteANote() {
-		ResponseEntity<Void> response = restTemplate
+    @DirtiesContext
+    void shouldDeleteANote() {
+        ResponseEntity<Void> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.exchange("/notes/1", HttpMethod.DELETE, null, Void.class);
+                .exchange("/notes/1", HttpMethod.DELETE, null, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-
-		ResponseEntity<NoteDto> getResponse = restTemplate
+        ResponseEntity<NoteDto> getResponse = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.getForEntity("/notes/1", NoteDto.class);
-		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-	}
+                .getForEntity("/notes/1", NoteDto.class);
+        assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
 
 	@Test
-	void shouldReturnNotFoundWhenDeletingNonExistentNote() {
-		ResponseEntity<Void> response = restTemplate
+    void shouldReturnNotFoundWhenDeletingNonExistentNote() {
+        ResponseEntity<Void> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
-				.exchange("/notes/999", HttpMethod.DELETE, null, Void.class);
-		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-	}
-
+                .exchange("/notes/999", HttpMethod.DELETE, null, Void.class);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+	
 	@Test
 	void contextLoads() {
 	}

@@ -32,7 +32,11 @@ public class NoteController {
     private ResponseEntity<NoteDto> getNoteById(
             @PathVariable Long id,
             Principal principal) {
-        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
+
+        Optional<Note> noteOptional = noteService.getNoteById(
+                id,
+                principal.getName());
+
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -46,7 +50,6 @@ public class NoteController {
             @RequestBody NoteDto noteDto,
             UriComponentsBuilder ucb,
             Principal principal) {
-
         Note note = noteDto.toEntity(principal.getName());
         note = noteService.save(note);
         URI location = ucb.path("/notes/{id}")
@@ -57,8 +60,8 @@ public class NoteController {
 
     @GetMapping("")
     private ResponseEntity<List<NoteDto>> getAllNotes(
-        Principal principal,
-        Pageable pageable) {
+            Principal principal,
+            Pageable pageable) {
         List<Note> notes = noteService.getAllNotes(pageable, principal.getName());
         List<NoteDto> noteDtos = notes.stream()
                 .map(NoteDto::fromEntity)
@@ -71,7 +74,11 @@ public class NoteController {
             @PathVariable Long id,
             @RequestBody NoteDto noteDto,
             Principal principal) {
-        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
+
+        Optional<Note> noteOptional = noteService.getNoteById(
+                id,
+                principal.getName());
+
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -84,9 +91,14 @@ public class NoteController {
     }
 
     @DeleteMapping("/{id}")
-    private ResponseEntity<Void> deleteNote(@PathVariable Long id,
+    private ResponseEntity<Void> deleteNote(
+            @PathVariable Long id,
             Principal principal) {
-        Optional<Note> noteOptional = noteService.getNoteById(id, principal.getName());
+
+        Optional<Note> noteOptional = noteService.getNoteById(
+                id,
+                principal.getName());
+
         if (noteOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

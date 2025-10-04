@@ -15,35 +15,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    // @Bean
-    // SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //     return http.build();
-    // }
-
-    // @Bean
-    // SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-    //     http.authorizeHttpRequests(
-    //             request -> request
-    //                     .requestMatchers("/notes/**").authenticated()) // Secure the /notes endpoint
-    //             .httpBasic(Customizer.withDefaults())                
-    //             .csrf(csrf -> csrf.disable() // Disable CSRF for simplicity in this example
-    //             ); // Use basic authentication for simplicity
-
-    //     return http.build();
-    // }
-
-
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(
                 request -> request
                         .requestMatchers("/notes/**")
-                        .hasRole("NOTE-OWNER")) // enable ROLE-BASED access control                        
-                .httpBasic(Customizer.withDefaults())                
-                .csrf(csrf -> csrf.disable() // Disable CSRF for simplicity in this example
-                ); // Use basic authentication for simplicity
+                        .hasRole("NOTE-OWNER")
+                        .anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
@@ -68,4 +49,6 @@ public class SecurityConfig {
                 .build();
         return new InMemoryUserDetailsManager(user, noOwnerNotes);
     }
+
+
 }
