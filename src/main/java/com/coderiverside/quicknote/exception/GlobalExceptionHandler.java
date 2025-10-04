@@ -12,9 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(NoteNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoteNotFoundException(
-            NoteNotFoundException exception,
+            ResourceNotFoundException exception,
             WebRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse(

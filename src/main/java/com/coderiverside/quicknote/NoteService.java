@@ -1,7 +1,7 @@
 package com.coderiverside.quicknote;
 
 import com.coderiverside.quicknote.exception.BadRequestException;
-import com.coderiverside.quicknote.exception.NoteNotFoundException;
+import com.coderiverside.quicknote.exception.ResourceNotFoundException;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,7 +21,7 @@ public class NoteService {
             throw new BadRequestException("Note id cannot be null");
         }
         return noteRepository.findByIdAndOwner(id, owner)
-                .orElseThrow(() -> new NoteNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Note save(Note note) {
