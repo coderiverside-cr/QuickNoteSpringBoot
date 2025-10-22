@@ -7,22 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNoteNotFoundException(
-            ResourceNotFoundException exception,
-            WebRequest request) {
-
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(
+            ResourceNotFoundException exception, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 request.getDescription(false),
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now());
-
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 

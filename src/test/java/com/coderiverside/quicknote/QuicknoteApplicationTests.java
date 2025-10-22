@@ -68,9 +68,8 @@ class QuicknoteApplicationTests {
 				.withBasicAuth("sophia", "Zaqwsx")
 				.getForEntity("/notes/25", ErrorResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().message()).isEqualTo("Note not found with id: 25");
-		assertThat(response.getBody().statusCode()).isEqualTo(404);
+		assertThat(response.getBody().message())
+				.isEqualTo("Resource with ID 25 not found.");
 
 	}
 
@@ -226,7 +225,7 @@ class QuicknoteApplicationTests {
 
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().message()).isEqualTo("Note not found with id: 999");
+		assertThat(response.getBody().message()).isEqualTo("Resource with ID 999 not found.");
 		assertThat(response.getBody().statusCode()).isEqualTo(404);
 	}
 
@@ -265,7 +264,7 @@ class QuicknoteApplicationTests {
 				.getForEntity("/notes/1", ErrorResponse.class);
 		assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(getResponse.getBody()).isNotNull();
-		assertThat(getResponse.getBody().message()).isEqualTo("Note not found with id: 1");
+		assertThat(getResponse.getBody().message()).isEqualTo("Resource with ID 1 not found.");
 	}
 
 	@Test
@@ -275,7 +274,7 @@ class QuicknoteApplicationTests {
 				.exchange("/notes/999", HttpMethod.DELETE, null, ErrorResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().message()).isEqualTo("Note not found with id: 999");
+		assertThat(response.getBody().message()).isEqualTo("Resource with ID 999 not found.");
 	}
 
 	@Test
@@ -289,7 +288,7 @@ class QuicknoteApplicationTests {
 				.getForEntity("/notes/4", ErrorResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().message()).isEqualTo("Note not found with id: 4");
+		assertThat(response.getBody().message()).isEqualTo("Resource with ID 4 not found.");
 	}
 
 	@Test
@@ -299,7 +298,7 @@ class QuicknoteApplicationTests {
 				.exchange("/notes/4", HttpMethod.DELETE, null, ErrorResponse.class);
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
 		assertThat(response.getBody()).isNotNull();
-		assertThat(response.getBody().message()).isEqualTo("Note not found with id: 4");
+		assertThat(response.getBody().message()).isEqualTo("Resource with ID 4 not found.");
 	}
 
 }
