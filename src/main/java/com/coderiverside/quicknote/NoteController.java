@@ -27,52 +27,47 @@ public class NoteController {
         }
 
         @GetMapping("/{id}")
-        private ResponseEntity<NoteDto> getNoteById(
+        public ResponseEntity<NoteDto> getNoteById(
                         @PathVariable Long id,
                         Principal principal) {
-                Note note = noteService.getNoteById(id, principal.getName());
-                return ResponseEntity.ok(NoteDto.fromEntity(note));
+                NoteDto note = noteService.getNoteByIdDto(id, principal.getName());
+                return ResponseEntity.ok(note);
         }
 
         @PostMapping("")
-        private ResponseEntity<Void> createNote(
+        public ResponseEntity<Void> createNote(
                         @RequestBody NoteDto noteDto,
                         UriComponentsBuilder ucb,
                         Principal principal) {
-                Note note = noteDto.toEntity(principal.getName());
-                note = noteService.save(note);
+                NoteDto created = noteService.createNote(noteDto, principal.getName());
                 URI location = ucb.path("/notes/{id}")
-                                .buildAndExpand(note.getId())
+                                .buildAndExpand(created.id())
                                 .toUri();
                 return ResponseEntity.created(location).build();
         }
 
         @GetMapping("")
-        private ResponseEntity<List<NoteDto>> getAllNotes(
+        public ResponseEntity<List<NoteDto>> getAllNotes(
                         Principal principal,
                         Pageable pageable) {
-                List<Note> notes = noteService.getAllNotes(pageable, principal.getName());
-                List<NoteDto> noteDtos = notes.stream()
-                                .map(NoteDto::fromEntity)
-                                .toList();
-                return ResponseEntity.ok(noteDtos);
+                List<NoteDto> notes = noteService.getAllNotes(pageable, principal.getName());
+                return ResponseEntity.ok(notes);
         }
 
         @PutMapping("/{id}")
-        private ResponseEntity<Void> updateNote(
+        public ResponseEntity<Void> updateNote(
                         @PathVariable Long id,
                         @RequestBody NoteDto noteDto,
                         Principal principal) {
-                Note note = noteDto.toEntity(principal.getName());
-                noteService.update(id, note, principal.getName());
+                noteService.updateNote(id, noteDto, principal.getName());
                 return ResponseEntity.noContent().build();
         }
 
         @DeleteMapping("/{id}")
-        private ResponseEntity<Void> deleteNote(
+        public ResponseEntity<Void> deleteNote(
                         @PathVariable Long id,
                         Principal principal) {
-                noteService.delete(id, principal.getName());
+                noteService.deleteNote(id, principal.getName());
                 return ResponseEntity.noContent().build();
         }
 

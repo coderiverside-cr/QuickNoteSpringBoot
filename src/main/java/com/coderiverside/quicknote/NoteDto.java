@@ -3,9 +3,11 @@ package com.coderiverside.quicknote;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record NoteDto(
-        long id,
+        Long id,
         String title,
         String content,
         String type,
@@ -29,8 +31,7 @@ public record NoteDto(
     }
 
     public Note toEntity(String owner) {
-        Note note = new Note();
-        note.setId(this.id);
+        Note note = new Note();        
         note.setTitle(this.title);
         note.setContent(this.content);
         note.setType(this.type);

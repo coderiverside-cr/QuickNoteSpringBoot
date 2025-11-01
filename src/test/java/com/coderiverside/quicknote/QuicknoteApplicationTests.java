@@ -77,7 +77,7 @@ class QuicknoteApplicationTests {
 	@DirtiesContext
 	void shouldCreateANote() {
 		NoteDto newNote = new NoteDto(
-				0L,
+				null,
 				"Meeting Notes",
 				"Discuss project roadmap and milestones",
 				"text",
@@ -115,17 +115,17 @@ class QuicknoteApplicationTests {
 
 		List<NoteDto> notes = response.getBody();
 		assertThat(notes).isNotNull();
-		assertThat(notes).hasSize(3);
+		assertThat(notes).hasSize(4);
 
 		List<Long> ids = notes.stream().map(NoteDto::id).toList();
-		assertThat(ids).containsExactlyInAnyOrder(1L, 2L, 3L);
+		assertThat(ids).containsExactlyInAnyOrder(1L, 2L, 3L, 8L);
 
 		List<String> titles = notes.stream().map(NoteDto::title).toList();
 		assertThat(titles).containsExactlyInAnyOrder(
 				"Grocery List",
 				"Buy groceries",
-				"Gym workout");
-
+				"Gym workout",
+				"Test note for settings");
 	}
 
 	@Test
@@ -153,7 +153,7 @@ class QuicknoteApplicationTests {
 		ResponseEntity<List<NoteDto>> response = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
 				.exchange(
-						"/notes?page=0&size=3&sort=title,desc",
+						"/notes?page=0&size=4&sort=title,desc",
 						HttpMethod.GET,
 						null,
 						new ParameterizedTypeReference<List<NoteDto>>() {
@@ -164,13 +164,14 @@ class QuicknoteApplicationTests {
 
 		List<NoteDto> notes = response.getBody();
 		assertThat(notes).isNotNull();
-		assertThat(notes).hasSize(3);
+		assertThat(notes).hasSize(4);
 
-		String lastTitle = notes.get(0).title();
-		assertThat(lastTitle).isEqualTo("Gym workout");
-
-		String firstTitle = notes.get(2).title();
-		assertThat(firstTitle).isEqualTo("Buy groceries");
+		// Descending by title: "Test note for settings", "Gym workout", "Grocery List",
+		// "Buy groceries"
+		assertThat(notes.get(0).title()).isEqualTo("Test note for settings");
+		assertThat(notes.get(1).title()).isEqualTo("Gym workout");
+		assertThat(notes.get(2).title()).isEqualTo("Grocery List");
+		assertThat(notes.get(3).title()).isEqualTo("Buy groceries");
 	}
 
 	@Test
