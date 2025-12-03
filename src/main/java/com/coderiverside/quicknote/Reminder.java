@@ -23,12 +23,12 @@ public class Reminder {
     @Column(name = "remind_at")
     private LocalDateTime remindAt;
 
+    @Column(name = "owner", nullable = false)
+    private String owner;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "note_id", nullable = false)
     private Note note;
-
-    @Column(name = "owner", nullable = false)
-    private String owner;
 
     public String getOwner() {
         return owner;

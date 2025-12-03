@@ -12,14 +12,14 @@ public class NoteSettings {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId 
-    @JoinColumn(name = "note_id", nullable = false) 
+    @JoinColumn(name = "note_id", nullable = false)
     private Note note;
 
     @Column(name = "is_locked", nullable = false)
     private boolean isLocked = false; 
 
     @Column(length = 20)
-    private String priority = "Low"; 
+    private String priority;
 
     @Column(name = "enable_sharing", nullable = false)
     private boolean enableSharing = true; 
