@@ -44,8 +44,7 @@ public class NoteSettingsService {
             throw new BadRequestException("Settings already exist for note " + noteId);
         }
 
-        NoteSettings settings = settingsDto.toEntity();
-        settings.setNote(note);
+        NoteSettings settings = settingsDto.toEntity(note);
         settings = noteSettingsRepository.save(settings);
 
         return NoteSettingsDto.fromEntity(settings);
@@ -62,7 +61,7 @@ public class NoteSettingsService {
 
         Note note = noteService.getNoteById(noteId, owner);
         NoteSettings existingSettings = getNoteSettingsById(noteId);
-        NoteSettings newSettings = settingsDto.toEntity();
+        NoteSettings newSettings = settingsDto.toEntity(note);
 
         existingSettings.setNote(note);
         existingSettings.setLocked(newSettings.isLocked());

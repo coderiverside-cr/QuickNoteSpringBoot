@@ -34,6 +34,14 @@ public class NoteController {
                 return ResponseEntity.ok(note);
         }
 
+        @GetMapping("/{id}/extended")
+        public ResponseEntity<NoteExtendedDto> getNoteWithRelations(
+                        @PathVariable Long id,
+                        Principal principal) {
+                NoteExtendedDto note = noteService.getNoteWithRelationsDto(id, principal.getName());
+                return ResponseEntity.ok(note);
+        }
+
         @PostMapping("")
         public ResponseEntity<Void> createNote(
                         @RequestBody NoteDto noteDto,
@@ -44,6 +52,18 @@ public class NoteController {
                                 .buildAndExpand(created.id())
                                 .toUri();
                 return ResponseEntity.created(location).build();
+        }
+
+        @PostMapping("/extended")
+        public ResponseEntity<NoteDto> createFullNote(
+                        @RequestBody NoteExtendedDto fullNoteDto,
+                        UriComponentsBuilder ucb,
+                        Principal principal) {
+                NoteDto created = noteService.createFullNote(fullNoteDto, principal.getName());
+                URI location = ucb.path("/notes/{id}")
+                                .buildAndExpand(created.id())
+                                .toUri();
+                return ResponseEntity.created(location).body(created);
         }
 
         @GetMapping("")

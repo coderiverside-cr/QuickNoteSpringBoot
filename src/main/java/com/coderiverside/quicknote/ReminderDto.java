@@ -17,10 +17,11 @@ public record ReminderDto(
                 reminder.getOwner());
     }
 
-    public Reminder toEntity(String owner) {
+    public Reminder toEntity(String owner, Note note) {
         Reminder reminder = new Reminder();
         reminder.setRemindAt(this.remindAt);
         reminder.setOwner(owner);
+        reminder.setNote(note);
         return reminder;
     }
 }

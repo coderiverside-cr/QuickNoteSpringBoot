@@ -66,8 +66,7 @@ public class ReminderService {
         }
 
         Note note = noteService.getNoteById(noteId, owner);
-        Reminder reminder = reminderDto.toEntity(owner);
-        reminder.setNote(note);
+        Reminder reminder = reminderDto.toEntity(owner, note);
         reminder = reminderRepository.save(reminder);
 
         return ReminderDto.fromEntity(reminder);
