@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/notes/{noteId}/settings")
@@ -36,7 +37,7 @@ public class NoteSettingsController {
     @PostMapping("")
     public ResponseEntity<NoteSettingsDto> createSettings(
             @PathVariable Long noteId,
-            @RequestBody NoteSettingsDto settingsDto,
+            @Valid @RequestBody NoteSettingsDto settingsDto,
             Principal principal) {
 
         NoteSettingsDto createdSettings = settingsService.create(noteId, settingsDto, principal.getName());
@@ -47,7 +48,7 @@ public class NoteSettingsController {
     @PutMapping("")
     public ResponseEntity<Void> updateNoteSettings(
             @PathVariable Long noteId,
-            @RequestBody NoteSettingsDto settingsDto,
+            @Valid @RequestBody NoteSettingsDto settingsDto,
             Principal principal) {
         settingsService.update(noteId, settingsDto, principal.getName());
         return ResponseEntity.noContent().build();

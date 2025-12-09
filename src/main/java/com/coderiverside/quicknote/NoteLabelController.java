@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/notes/{noteId}/labels")
@@ -36,7 +37,7 @@ public class NoteLabelController {
     @PostMapping("")
     public ResponseEntity<Void> add(
             @PathVariable Long noteId,
-            @RequestBody NoteLabelDto noteLabelDto,
+            @Valid @RequestBody NoteLabelDto noteLabelDto,
             Principal principal) {
         noteLabelService.addLabelToNote(noteId, noteLabelDto.labelId(), principal.getName());
         URI location = URI.create(String.format("/notes/%d/labels/%d", noteId, noteLabelDto.labelId()));

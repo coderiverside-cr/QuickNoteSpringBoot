@@ -2,9 +2,12 @@ package com.coderiverside.quicknote;
 
 import java.time.LocalDateTime;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Future;
+
 public record ReminderDto(
         Long id,
-        LocalDateTime remindAt,
+        @NotNull(message = "Reminder date is required") @Future(message = "Reminder date must be in the future") LocalDateTime remindAt,
         String owner) {
 
     public static ReminderDto fromEntity(Reminder reminder) {

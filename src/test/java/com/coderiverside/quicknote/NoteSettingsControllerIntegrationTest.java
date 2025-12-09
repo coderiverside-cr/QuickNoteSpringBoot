@@ -47,7 +47,7 @@ class NoteSettingsControllerIntegrationTest {
     @DirtiesContext
     void shouldCreateNoteSettings() {
         // Use note 8, which does not have initial settings and is owned by sophia
-        NoteSettingsDto newSettings = new NoteSettingsDto(8L, false, "High", true);
+        NoteSettingsDto newSettings = new NoteSettingsDto(8L, false, "HIGH", true);
         ResponseEntity<Void> createResponse = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
                 .postForEntity("/notes/8/settings", newSettings, Void.class);
@@ -57,13 +57,13 @@ class NoteSettingsControllerIntegrationTest {
                 .withBasicAuth("sophia", "Zaqwsx")
                 .getForEntity(location, NoteSettingsDto.class);
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(getResponse.getBody().priority()).isEqualTo("High");
+        assertThat(getResponse.getBody().priority()).isEqualTo("HIGH");
     }
 
     @Test
     @DirtiesContext
     void shouldUpdateNoteSettings() {
-        NoteSettingsDto updatedSettings = new NoteSettingsDto(1L, true, "Medium", false);
+        NoteSettingsDto updatedSettings = new NoteSettingsDto(1L, true, "MEDIUM", false);
         HttpEntity<NoteSettingsDto> requestEntity = new HttpEntity<>(updatedSettings);
         ResponseEntity<Void> response = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
@@ -73,7 +73,7 @@ class NoteSettingsControllerIntegrationTest {
                 .withBasicAuth("sophia", "Zaqwsx")
                 .getForEntity("/notes/1/settings", NoteSettingsDto.class);
         assertThat(getResponse.getBody().locked()).isTrue();
-        assertThat(getResponse.getBody().priority()).isEqualTo("Medium");
+        assertThat(getResponse.getBody().priority()).isEqualTo("MEDIUM");
         assertThat(getResponse.getBody().enableSharing()).isFalse();
     }
 

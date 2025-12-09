@@ -1,9 +1,12 @@
 package com.coderiverside.quicknote;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 public record NoteSettingsDto(
         Long id,
         boolean locked,
-        String priority,
+        @NotBlank(message = "Priority is required") @Pattern(regexp = "^(LOW|MEDIUM|HIGH)$", message = "Priority must be 'LOW', 'MEDIUM', or 'HIGH'") String priority,
         boolean enableSharing) {
 
     public static NoteSettingsDto fromEntity(NoteSettings s) {

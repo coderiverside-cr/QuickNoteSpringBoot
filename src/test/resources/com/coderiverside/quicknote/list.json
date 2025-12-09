@@ -7,7 +7,7 @@
     "creationDate": "2025-08-12T14:30:00Z",
     "isPinned": true,
     "isArchived": false,
-    "color": "yellow",
+    "color": "#FFFF00",
     "owner": "sophia"
   },
   {
@@ -18,7 +18,7 @@
     "creationDate": "2025-08-16T10:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white",
+    "color": "#FFFFFF",
     "owner": "sophia"
   },
   {
@@ -29,7 +29,7 @@
     "creationDate": "2025-08-15T08:00:00Z",
     "isPinned": true,
     "isArchived": false,
-    "color": "yellow",
+    "color": "#FFFF00",
     "owner": "sophia"
   },
   {
@@ -40,7 +40,7 @@
     "creationDate": "2025-08-14T09:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white",
+    "color": "#FFFFFF",
     "owner": "gabriel"
   },
   {
@@ -51,7 +51,7 @@
     "creationDate": "2025-08-13T11:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white",
+    "color": "#FFFFFF",
     "owner": "gabriel"
   },
   {
@@ -62,7 +62,7 @@
     "creationDate": "2025-08-17T12:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white",
+    "color": "#FFFFFF",
     "owner": "fabricio"
   },
   {
@@ -73,7 +73,7 @@
     "creationDate": "2025-08-18T09:00:00Z",
     "isPinned": false,
     "isArchived": false,
-    "color": "white",
+    "color": "#FFFFFF",
     "owner": "fabricio"
   }
 ]

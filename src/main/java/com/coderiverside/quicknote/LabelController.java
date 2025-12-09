@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/labels")
@@ -44,7 +45,7 @@ public class LabelController {
 
     @PostMapping("")
     public ResponseEntity<Void> create(
-            @RequestBody LabelDto labelDto,
+            @Valid @RequestBody LabelDto labelDto,
             UriComponentsBuilder ucb,
             Principal principal) {
         LabelDto created = labelService.createLabel(labelDto, principal.getName());
@@ -57,7 +58,7 @@ public class LabelController {
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(
             @PathVariable Long id,
-            @RequestBody LabelDto labelDto,
+            @Valid @RequestBody LabelDto labelDto,
             Principal principal) {
         labelService.updateLabel(id, labelDto, principal.getName());
         return ResponseEntity.noContent().build();

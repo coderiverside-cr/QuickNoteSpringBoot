@@ -42,7 +42,7 @@ class ReminderControllerIntegrationTest {
     @Test
     @DirtiesContext
     void shouldCreateReminder() {
-        ReminderDto newReminder = new ReminderDto(null, LocalDateTime.of(2025, 11, 1, 10, 0), "sophia");
+        ReminderDto newReminder = new ReminderDto(null, LocalDateTime.of(2027, 11, 1, 10, 0), "sophia");
         ResponseEntity<Void> createResponse = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
                 .postForEntity("/notes/1/reminders", newReminder, Void.class);
@@ -52,7 +52,7 @@ class ReminderControllerIntegrationTest {
                 .withBasicAuth("sophia", "Zaqwsx")
                 .getForEntity(location, ReminderDto.class);
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(getResponse.getBody().remindAt()).isEqualTo(LocalDateTime.of(2025, 11, 1, 10, 0));
+        assertThat(getResponse.getBody().remindAt()).isEqualTo(LocalDateTime.of(2027, 11, 1, 10, 0));
     }
 
     @Test
@@ -77,7 +77,7 @@ class ReminderControllerIntegrationTest {
     @Test
     @DirtiesContext
     void shouldUpdateReminder() {
-        ReminderDto updatedReminder = new ReminderDto(1L, LocalDateTime.of(2025, 12, 1, 10, 0), "sophia");
+        ReminderDto updatedReminder = new ReminderDto(1L, LocalDateTime.of(2027, 12, 1, 10, 0), "sophia");
         HttpEntity<ReminderDto> requestEntity = new HttpEntity<>(updatedReminder);
         ResponseEntity<Void> response = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
@@ -86,7 +86,7 @@ class ReminderControllerIntegrationTest {
         ResponseEntity<ReminderDto> getResponse = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
                 .getForEntity("/notes/1/reminders/1", ReminderDto.class);
-        assertThat(getResponse.getBody().remindAt()).isEqualTo(LocalDateTime.of(2025, 12, 1, 10, 0));
+        assertThat(getResponse.getBody().remindAt()).isEqualTo(LocalDateTime.of(2027, 12, 1, 10, 0));
     }
 
     @Test

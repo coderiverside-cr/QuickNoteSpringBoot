@@ -84,7 +84,7 @@ class QuicknoteApplicationTests {
 				null,
 				false,
 				false,
-				"blue",
+				"#0000FF",
 				"sophia");
 		ResponseEntity<Void> createResponse = restTemplate
 				.withBasicAuth("sophia", "Zaqwsx")
@@ -185,7 +185,7 @@ class QuicknoteApplicationTests {
 				null,
 				false,
 				false,
-				"green",
+				"#00FF00",
 				"sophia");
 
 		HttpEntity<NoteDto> requestEntity = new HttpEntity<>(updatedNote);
@@ -217,7 +217,7 @@ class QuicknoteApplicationTests {
 				null,
 				false,
 				false,
-				"red",
+				"#FF0000",
 				"alejandro");
 		HttpEntity<NoteDto> requestEntity = new HttpEntity<>(unknowCard);
 		ResponseEntity<ErrorResponse> response = restTemplate
@@ -240,7 +240,7 @@ class QuicknoteApplicationTests {
 				null,
 				false,
 				false,
-				"green",
+				"#00FF00",
 				null);
 
 		HttpEntity<NoteDto> requestEntity = new HttpEntity<>(updatedNote);

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/notes/{noteId}/reminders")
@@ -52,7 +53,7 @@ public class ReminderController {
         @PostMapping("")
         public ResponseEntity<ReminderDto> create(
                         @PathVariable Long noteId,
-                        @RequestBody ReminderDto reminderDto,
+                        @Valid @RequestBody ReminderDto reminderDto,
                         UriComponentsBuilder ucb,
                         Principal principal) {
                 ReminderDto saved = reminderService.create(
@@ -70,14 +71,14 @@ public class ReminderController {
         public ResponseEntity<ReminderDto> update(
                         @PathVariable Long noteId,
                         @PathVariable Long reminderId,
-                        @RequestBody ReminderDto reminderDto,
+                        @Valid @RequestBody ReminderDto reminderDto,
                         Principal principal) {
                 reminderService.update(
                                 noteId,
                                 reminderId,
                                 reminderDto,
                                 principal.getName());
-                return ResponseEntity.noContent().build();                                
+                return ResponseEntity.noContent().build();
         }
 
         @DeleteMapping("/{reminderId}")
