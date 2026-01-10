@@ -5,11 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 import com.coderiverside.quicknote.config.AppInfo;
-import com.coderiverside.quicknote.config.FeatureSettings;
 import com.coderiverside.quicknote.config.SystemLists;
+import com.coderiverside.quicknote.config.FeatureSettings;
 
 @SpringBootApplication
-@EnableConfigurationProperties({AppInfo.class, FeatureSettings.class, SystemLists.class})
+@EnableConfigurationProperties({AppInfo.class, SystemLists.class, FeatureSettings.class})
 public class QuicknoteApplication {
 
 	public static void main(String[] args) {

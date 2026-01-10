@@ -1,12 +1,19 @@
 
 # App Info (Record)
-
 app.info:
     name: QuickNote App
     description: A simple note-taking application
-    version: 1.0.0
+    version: 1.0.1
 
-# Feature Flags (Map)
+app.lists:
+    items:
+        - name: "LocalNetwork"
+          priority: 1
+        - name: "TrustedPartner"
+          priority: 5
+        - name: "AdminSubnet"
+          priority: 10
+
 app.features.flags:
     beta-mode:
         enabled: true
@@ -18,15 +25,4 @@ app.features.flags:
         enabled: true
         description: Allow exporting notes to PDF
 
-# Whitelist (List of objects)
-app.lists:
-    items:
-        - name: "LocalNetwork"
-          priority: 1
-        - name: "TrustedPartner"
-          priority: 5
-        - name: "AdminSubnet"
-          priority: 10
-
-# Welcome Message (@Value)
 app.welcome-message: Welcome to QuickNote! Enjoy your stay.

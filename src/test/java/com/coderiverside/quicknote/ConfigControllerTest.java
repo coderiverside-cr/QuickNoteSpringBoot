@@ -32,7 +32,7 @@ class ConfigControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().name()).isEqualTo("QuickNote App");
-        assertThat(response.getBody().version()).isEqualTo("1.0.0");
+        assertThat(response.getBody().version()).isEqualTo("1.0.1");
     }
 
     @Test
@@ -49,16 +49,16 @@ class ConfigControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody()).containsKey("beta-mode");
-        assertThat(response.getBody().get("beta-mode").isEnabled()).isTrue();
-        assertThat(response.getBody().get("beta-mode").getDescription()).isNotEmpty();
+        assertThat(response.getBody().get("beta-mode").enabled()).isTrue();
+        assertThat(response.getBody().get("beta-mode").description()).isNotEmpty();
     }
 
     @Test
-    void shouldReturnWhitelist() {
+    void shouldReturnList() {
         ResponseEntity<List<SystemItem>> response = restTemplate
                 .withBasicAuth("sophia", "Zaqwsx")
                 .exchange(
-                        "/api/config/whitelist",
+                        "/api/config/list",
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<List<SystemItem>>() {

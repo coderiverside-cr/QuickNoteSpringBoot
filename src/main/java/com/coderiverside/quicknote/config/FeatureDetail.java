@@ -1,22 +1,5 @@
 package com.coderiverside.quicknote.config;
 
-public class FeatureDetail {
-    private boolean enabled;
-    private String description;
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+public record FeatureDetail(boolean enabled, String description) {
+    
 }
