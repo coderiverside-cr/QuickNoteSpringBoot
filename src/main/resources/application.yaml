@@ -1,0 +1,32 @@
+
+# App Info (Record)
+
+app.info:
+    name: QuickNote App
+    description: A simple note-taking application
+    version: 1.0.0
+
+# Feature Flags (Map)
+app.features.flags:
+    beta-mode:
+        enabled: true
+        description: Enable beta features for early access users
+    dark-theme:
+        enabled: false
+        description: Enable dark mode UI
+    export-enabled:
+        enabled: true
+        description: Allow exporting notes to PDF
+
+# Whitelist (List of objects)
+app.lists:
+    items:
+        - name: "LocalNetwork"
+          priority: 1
+        - name: "TrustedPartner"
+          priority: 5
+        - name: "AdminSubnet"
+          priority: 10
+
+# Welcome Message (@Value)
+app.welcome-message: Welcome to QuickNote! Enjoy your stay.
