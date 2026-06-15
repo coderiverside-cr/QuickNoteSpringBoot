@@ -17,7 +17,10 @@ import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//import org.springframework.test.context.ActiveProfiles;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@ActiveProfiles("dev")
 class ConfigControllerTest {
 
     @Autowired
